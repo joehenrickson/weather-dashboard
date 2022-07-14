@@ -19,6 +19,8 @@ function searchCity(cityname) {
     $("#current").empty();
     var mainDate = moment().format("L");
 
+    //-- city information --//
+
     var cityNameEl = $("<h2>").text(response.name);
     var displayDate = cityNameEl.append(" " + mainDate);
     var temperature = $("<p>").text("Tempraturer: " + response.main.temp);
@@ -27,35 +29,43 @@ function searchCity(cityname) {
     var weather = response.weather[0].main;
 
     if (weather === "Rain") {
-      var currentIcon = $("<img>").attr(
+      var weatherIMG = $("<img>").attr(
         "src",
         "http://openweathermap.org/img/wn/09d.png"
       );
-      currentIcon.attr("style", "height: 60px; width: 60px");
-    } else if (weather === "Clouds") {
-      var currentIcon = $("<img>").attr(
-        "src",
-        "http://openweathermap.org/img/wn/03d.png"
-      );
-      currentIcon.attr("style", "height: 60px; width: 60px");
-    } else if (weather === "Clear") {
-      var currentIcon = $("<img>").attr(
-        "src",
-        "http://openweathermap.org/img/wn/01d.png"
-      );
-      currentIcon.attr("style", "height: 60px; width: 60px");
+      weatherIMG.attr("style", "height: 60px; width: 60px");
     } else if (weather === "Drizzle") {
-      var currentIcon = $("<img>").attr(
+      var weatherIMG = $("<img>").attr(
         "src",
         "http://openweathermap.org/img/wn/10d.png"
       );
-      currentIcon.attr("style", "height: 60px; width: 60px");
+      weatherIMG.attr("style", "height: 60px; width: 60px");
+    } else if (weather === "Clear") {
+      var weatherIMG = $("<img>").attr(
+        "src",
+        "http://openweathermap.org/img/wn/01d.png"
+      );
+      weatherIMG.attr("style", "height: 60px; width: 60px");
+    } else if (weather === "Clouds") {
+      var weatherIMG = $("<img>").attr(
+        "src",
+        "http://openweathermap.org/img/wn/03d.png"
+      );
+      weatherIMG.attr("style", "height: 60px; width: 60px");
     } else if (weather === "Snow") {
-      var currentIcon = $("<img>").attr(
+      var weatherIMG = $("<img>").attr(
         "src",
         "http://openweathermap.org/img/wn/13d.png"
       );
-      currentIcon.attr("style", "height: 60px; width: 60px");
+      weatherIMG.attr("style", "height: 60px; width: 60px");
     }
   });
 }
+
+//-- new HTML div --//
+
+var newDiv = $("<div>");
+
+newDiv.append(displayMainDate, weatherIMG, temperature, humidity, windSpeed);
+
+$("#current").html(newDiv);
