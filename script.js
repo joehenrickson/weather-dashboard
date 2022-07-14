@@ -69,3 +69,55 @@ var newDiv = $("<div>");
 newDiv.append(displayMainDate, weatherIMG, temperature, humidity, windSpeed);
 
 $("#current").html(newDiv);
+
+//-- uvl function --//
+
+var latitude = response.coord.latitude;
+var longitude = response.coord.longitude;
+var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?&appid=ecc0be5fd92206da3aa90cc41c13ca56&lat=" + lat  + "&lon=" + lon;
+
+        $.ajax({
+            url: uvIndex,
+            method: 'GET'
+        }).then(function (response) {
+            $('#uvIndex-display').empty();
+            var uvIndexResults = response.value;
+            //create HTML for new div
+            var uvlIndex = $("<button class='btn bg-success'>").text("UV Index: " + response.value);
+      
+            $('#uvl-display').html(uvlIndex);
+    
+        });
+    });
+
+    $("#select-city").on("click", function (event) {
+        // Preventing the button from trying to submit the form......
+        event.preventDefault();
+        // Storing the city name........
+        var cityInput = $("#city-input").val().trim();
+    
+        //save search term to local storage.....
+        var textContent = $(this).siblings("input").val();
+        var storearr = [];
+        storearr.push(textContent);
+        localStorage.setItem('cityName', JSON.stringify(storearr));
+      
+        searchCity(cityInput);
+        pageLoad();
+    });
+
+    function pageLoad () {
+        var lastSearch = JSON.parse(localStorage.getItem("cityName"));
+        var searchDiv = $("<button class='btn border text-muted mt-1 shadow-sm bg-white rounded' style='width: 12rem;'>").text(lastSearch);
+        var psearch = $("<div>");
+        psearch.append(searchDiv)
+        $("#searchhistory").prepend(psearch);
+    }
+    
+    //Event deligation...
+    $("#searchhistory").on('click', '.btn', function(event) {
+    event.preventDefault();
+        console.log($(this).text());
+        searchCity($(this).text());
+    
+    });
