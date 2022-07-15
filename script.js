@@ -107,14 +107,16 @@ function searchCity(cityname) {
     $("#5day").empty();
     for (var i = 0; i < results.length; i += 8) {
       var fiveDayDiv = $(
-        "<div class='card shadow-lg text-white bg-primary mx-auto mb-10 p-2' style='width: 8.5rem; height: 11rem;'>"
+        "<div class='card shadow-lg text-white bg-primary mx-auto mb-10 p-2' style='width: 8.5rem; height: 15rem;'>"
       );
       var date = results[i].dt_txt;
       var setDate = date.substr(5, 5);
       var temp2 = results[i].main.temp;
+      var wind2 = results[i].wind.speed;
       var hum2 = results[i].main.humidity;
       var h5date = $("<h5 class='card-title'>").text(setDate);
       var pTemp = $("<p class='card-text'>").text("Temp: " + temp2 + " °F");
+      var pWind = $("<p class='card-text'>").text("Wind: " + wind2 + " MPH");
       var pHum = $("<p class='card-text'>").text("Humidity: " + hum2 + " %");
 
       var weather = results[i].weather[0].main;
@@ -155,6 +157,7 @@ function searchCity(cityname) {
       fiveDayDiv.append(h5date);
       fiveDayDiv.append(icon);
       fiveDayDiv.append(pTemp);
+      fiveDayDiv.append(pWind);
       fiveDayDiv.append(pHum);
       $("#5day").append(fiveDayDiv);
     }
