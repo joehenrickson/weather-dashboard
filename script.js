@@ -6,26 +6,30 @@ function searchCity(cityname) {
   var getAPI =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     cityname +
-    "&units=imperial&appid=ecc0be5fd92206da3aa90cc41c13ca56";
+    "&units=imperial&appid=8694667569947d15259554b3609320a2";
   var forecast =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     cityname +
-    "&units=imperial&appid=ecc0be5fd92206da3aa90cc41c13ca56";
+    "&units=imperial&appid=8694667569947d15259554b3609320a2";
 
   $.ajax({
     url: getAPI,
     method: "GET",
   }).then(function (response) {
     $("#current").empty();
-    var mainDate = moment().format("L");
+    var mainDate = moment().format("LL");
 
     //-- city information --//
 
-    var cityName = $("<h2>").text(response.name);
+    var cityName = $("<h2>").text(response.name + " - ");
     var displayDate = cityName.append(" " + mainDate);
-    var temperature = $("<p>").text("Temperature: " + response.main.temp);
-    var humidity = $("<p>").text("Humidity: " + response.main.humidity);
-    var windSpeed = $("<p>").text("Wind Speed: " + response.wind.speed);
+    var temperature = $("<p>").text(
+      "Temperature: " + response.main.temp + " °F"
+    );
+    var humidity = $("<p>").text("Humidity: " + response.main.humidity + " %");
+    var windSpeed = $("<p>").text(
+      "Wind Speed: " + response.wind.speed + " MPH"
+    );
     var weather = response.weather[0].main;
 
     if (weather === "Rain") {
@@ -73,7 +77,7 @@ function searchCity(cityname) {
     var lat = response.coord.lat;
     var lon = response.coord.lon;
     var uvIndex =
-      "https://api.openweathermap.org/data/2.5/uvi?&appid=ecc0be5fd92206da3aa90cc41c13ca56&lat=" +
+      "https://api.openweathermap.org/data/2.5/uvi?&appid=8694667569947d15259554b3609320a2&lat=" +
       lat +
       "&lon=" +
       lon;
@@ -106,12 +110,12 @@ function searchCity(cityname) {
         "<div class='card shadow-lg text-white bg-primary mx-auto mb-10 p-2' style='width: 8.5rem; height: 11rem;'>"
       );
       var date = results[i].dt_txt;
-      var setDate = date.substr(0, 10);
+      var setDate = date.substr(5, 5);
       var temp2 = results[i].main.temp;
       var hum2 = results[i].main.humidity;
       var h5date = $("<h5 class='card-title'>").text(setDate);
-      var pTemp = $("<p class='card-text'>").text("Temp: " + temp2);
-      var pHum = $("<p class='card-text'>").text("Humidity " + hum2);
+      var pTemp = $("<p class='card-text'>").text("Temp: " + temp2 + " °F");
+      var pHum = $("<p class='card-text'>").text("Humidity: " + hum2 + " %");
 
       var weather = results[i].weather[0].main;
 
